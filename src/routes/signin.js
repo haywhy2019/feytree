@@ -88,7 +88,7 @@ router.post(
         };
         await UserManager.sendMail(message);
 
-        return res.status(200).send({ existingUser, message: '' });
+        return res.status(200).send({ existingUser, token: tmp_token });
 
         /*
         const userJwt = jwt.sign(
