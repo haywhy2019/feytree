@@ -5,7 +5,7 @@ export const isAdmin = (req, res, next) => {
   try {
     const token = req.headers.authorization.split(' ')[1];
     const payload = jwt.verify(token, process.env.JWT_KEY);
-    if (payload.app_role === 'super_admin') {
+    if (payload.app_role === 'admin') {
       next();
     } else {
       throw new NotAuthorizedError();

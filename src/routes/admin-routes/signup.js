@@ -43,7 +43,7 @@ router.post(
         user_role,
         company_name,
         uses,
-        app_role: 'user',
+        app_role: 'admin',
         account_status: 'inactive',
       });
       await user.save();
