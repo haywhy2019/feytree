@@ -25,12 +25,12 @@ router.get('/api/users/verify-email', currentUser, async (req, res) => {
   if (!existingUser && existingUser.otp !== otp) {
     res.status(401).send({ message: 'Invalid credential' });
   } else {
-    const otp = await UserManager.sendOTP(8);
+    const otp = await UserManager.sendOTP(100000000);
     existingUser.set({ otp: otp });
     await existingUser.save();
     const tmp_token = await UserManager.getVerificationToken(
       existingUser,
-      '5h',
+      '5m',
       '2FA'
     );
     const message = {

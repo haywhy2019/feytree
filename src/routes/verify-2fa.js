@@ -12,12 +12,12 @@ import { Password } from '../services/password';
 const router = express.Router();
 
 router.post(
-  '/api/users/set-password',
+  '/api/users/verify-2fa',
   [
     body('otp')
       .isNumeric()
       .trim()
-      .isLength({ min: 5, max: 5 })
+      .isLength({ min: 8, max: 8 })
       .withMessage('OTP must be between 5 Number'),
   ],
   currentUser,

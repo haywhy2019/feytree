@@ -72,13 +72,14 @@ router.post(
       if (!passwordsMatch) {
         res.status(401).send({ message: ' Invalid creadentials' });
       } else {
-        /*
-      if (existingUser.email_setting.otp == true) {
-        const otp = UserManager.sendOTP();
-        const tmp_token = UserManager.getVerificationToken(
-          user,
-          '5h',
-          'email_verification'
+        const otp = await UserManager.sendOTP(100000000);
+        console.log(otp);
+        existingUser.set({ otp: otp });
+        await existingUser.save();
+        const tmp_token = await UserManager.getVerificationToken(
+          existingUser,
+          '5m',
+          '2FA'
         );
         const message = {
           from: 'elonmusk@tesla.com',
@@ -87,15 +88,13 @@ router.post(
           html:
             '<h1>You need to verify your email!</h1><p> 2FA will expire within an hour, your 2FA is ' +
             otp +
-            ' Click to verify your email <a href="http://127.0.0.1:8000/token=' +
-            tmp_token +
-            '">Verify Account</a></p>',
+            ' Click to verify your email </p>',
         };
-        UserManager.sendMail(message);
+        await UserManager.sendMail(message);
 
-        res.status(200).send({user, message:""});
-      }
-*/
+        return res.status(200).send({ existingUser, token: tmp_token });
+
+        /*
         const userJwt = jwt.sign(
           {
             id: existingUser.id,
@@ -106,6 +105,7 @@ router.post(
         existingUser.token = userJwt;
 
         return res.status(200).send({ data: existingUser, token: userJwt });
+        */
       }
     }
   }

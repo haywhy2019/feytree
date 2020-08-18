@@ -41,8 +41,8 @@ export class UserManager {
     });
   }
 
-  static async sendOTP() {
-    const salt = randomBytes(5);
+  static async sendOTP(pow) {
+    var salt = Math.floor(Math.random() * pow);
 
     return salt;
   }

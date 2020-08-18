@@ -71,10 +71,13 @@ router.post(
       if (!passwordsMatch) {
         res.status(401).send({ message: ' Invalid creadentials' });
       } else {
-        const otp = await UserManager.sendOTP(8);
+        const otp = await UserManager.sendOTP(100000000);
+        console.log(otp);
+        existingUser.set({ otp: otp });
+        await existingUser.save();
         const tmp_token = await UserManager.getVerificationToken(
           existingUser,
-          '5h',
+          '5m',
           '2FA'
         );
         const message = {
