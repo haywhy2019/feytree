@@ -1,31 +1,35 @@
 import mongoose from 'mongoose';
 import { Password } from '../services/password';
 
-var registrationSchema = new Schema({
+var registrationSchema = new mongoose.Schema({
   text_field: {
     type: String,
-    required: required,
+    required: true,
   },
 
   field_type: {
+    type: String,
     enum: ['TextBox', 'SelectBox', 'CheckBox', 'Calender', 'Image'],
     default: 'TextBox',
   },
   order: {
     type: Number,
+    required: false,
   },
   mandetory: {
     type: Boolean,
+    required: false,
   },
   verify: {
     type: Boolean,
+    required: false,
   },
 });
 
-var tagSchema = new Schema({
+var tagSchema = new mongoose.Schema({
   tag_field: {
     type: String,
-    required: required,
+    required: true,
   },
   question_field: {
     type: Number,
@@ -37,23 +41,23 @@ const userSchema = new mongoose.Schema(
   {
     email: {
       type: String,
-      required: required,
+      required: true,
     },
     username: {
       type: String,
-      required: required,
+      required: true,
     },
     phone_number: {
       type: Number,
-      required: required,
+      required: true,
     },
     user_role: {
       type: String,
-      required: required,
+      required: true,
     },
     company_name: {
       type: String,
-      required: required,
+      required: true,
     },
     uses: {
       type: String,
@@ -77,16 +81,26 @@ const userSchema = new mongoose.Schema(
       default: {},
     },
     email_setting: {
-      set_otp: true,
-      email_digest: {
-        enum: ['NEVER', 'DAILY', 'WEEKLY', 'MONTHLY'],
-        default: 'NEW',
+      set_otp: {
+        type: Boolean,
+        default: true,
       },
-      notify_candidate: true,
+      email_digest: {
+        type: String,
+        enum: ['NEVER', 'DAILY', 'WEEKLY', 'MONTHLY'],
+        default: 'NEVER',
+      },
+      notify_candidate: {
+        type: Boolean,
+        default: true,
+      },
     },
 
     data_privacy: {
-      explicit_content: true,
+      explicit_content: {
+        type: Boolean,
+        default: true,
+      },
       content: {
         type: String,
       },
@@ -110,7 +124,7 @@ const userSchema = new mongoose.Schema(
     },
     app_role: {
       type: String,
-      required: required,
+      required: true,
     },
 
     password: {
