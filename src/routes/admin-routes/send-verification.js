@@ -10,7 +10,7 @@ import { UserManager } from '../../services/user-manager';
 
 const router = express.Router();
 
-router.get('/api/users/admin-verify-email', isAdmin, async (req, res) => {
+router.get('/api/admin/send-verification', isAdmin, async (req, res) => {
   let payload = '';
 
   try {
@@ -43,7 +43,7 @@ router.get('/api/users/admin-verify-email', isAdmin, async (req, res) => {
     };
     await UserManager.sendMail(message);
 
-    res.status(200).send(existingUser);
+    res.status(200).send({ existingUser });
   }
 });
 

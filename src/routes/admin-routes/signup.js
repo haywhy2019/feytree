@@ -9,7 +9,7 @@ import { UserManager } from '../../services/user-manager';
 const router = express.Router();
 
 router.post(
-  '/api/users/signup',
+  '/api/admin/signup',
   [
     body('email').isEmail().withMessage('Email must be valid'),
     body('username').isString().withMessage('Username must be valid'),
@@ -36,7 +36,7 @@ router.post(
     if (existingUser) {
       res.status(401).send({ message: ' Email in Use' });
     } else {
-      const user = User({
+      const user = UserAdmin({
         email,
         username,
         phone_number,

@@ -12,13 +12,13 @@ import { Password } from '../../services/password';
 const router = express.Router();
 
 router.post(
-  '/api/users/set-password',
+  '/api/admin/verify-token',
   [
     body('otp')
       .isNumeric()
       .trim()
       .isLength({ min: 8, max: 8 })
-      .withMessage('OTP must be between 5 Number'),
+      .withMessage('OTP must be  8 Number'),
   ],
   isAdmin,
   validateRequest,

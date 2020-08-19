@@ -9,7 +9,7 @@ import { UserManager } from '../services/user-manager';
 
 const router = express.Router();
 
-router.get('/api/users/verify-email', currentUser, async (req, res) => {
+router.get('/api/users/send-verification', currentUser, async (req, res) => {
   let payload = '';
 
   try {

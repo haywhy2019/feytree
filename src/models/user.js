@@ -1,27 +1,59 @@
 import mongoose from 'mongoose';
 import { Password } from '../services/password';
 
+var registrationSchema = new Schema({
+  text_field: {
+    type: String,
+    required: required,
+  },
+
+  field_type: {
+    enum: ['TextBox', 'SelectBox', 'CheckBox', 'Calender', 'Image'],
+    default: 'TextBox',
+  },
+  order: {
+    type: Number,
+  },
+  mandetory: {
+    type: Boolean,
+  },
+  verify: {
+    type: Boolean,
+  },
+});
+
+var tagSchema = new Schema({
+  tag_field: {
+    type: String,
+    required: required,
+  },
+  question_field: {
+    type: Number,
+    required: false,
+  },
+});
+
 const userSchema = new mongoose.Schema(
   {
     email: {
       type: String,
-      required: false,
+      required: required,
     },
     username: {
       type: String,
-      required: false,
+      required: required,
     },
     phone_number: {
       type: Number,
-      required: false,
+      required: required,
     },
     user_role: {
       type: String,
-      required: false,
+      required: required,
     },
     company_name: {
       type: String,
-      required: false,
+      required: required,
     },
     uses: {
       type: String,
@@ -42,16 +74,27 @@ const userSchema = new mongoose.Schema(
     test_window: {
       type: Object,
       required: false,
+      default: {},
     },
     email_setting: {
-      type: Object,
-      default: {},
-      required: false,
+      set_otp: true,
+      email_digest: {
+        enum: ['NEVER', 'DAILY', 'WEEKLY', 'MONTHLY'],
+        default: 'NEW',
+      },
+      notify_candidate: true,
     },
-    tags: {
-      type: Array,
-      required: false,
+
+    data_privacy: {
+      explicit_content: true,
+      content: {
+        type: String,
+      },
     },
+
+    registration_field: [registrationSchema],
+
+    tags: [tagSchema],
 
     user_status: {
       type: String,
@@ -67,7 +110,7 @@ const userSchema = new mongoose.Schema(
     },
     app_role: {
       type: String,
-      required: false,
+      required: required,
     },
 
     password: {

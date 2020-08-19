@@ -9,7 +9,7 @@ import { UserManager } from '../../services/user-manager';
 
 const router = express.Router();
 
-router.get('/api/users/admin-verify-email', isAdmin, async (req, res) => {
+router.post('/api/admin/send-token', isAdmin, async (req, res) => {
   let payload = '';
 
   try {
@@ -22,8 +22,8 @@ router.get('/api/users/admin-verify-email', isAdmin, async (req, res) => {
 
   const { email, reason } = payload;
   const existingUser = await UserAdmin.findOne({ email: email });
-  if (!existingUser && existingUser.otp !== otp) {
-    res.status(401).send({ message: 'Invalid credential' });
+  if (!existingUser) {
+    return res.status(401).send({ message: 'Invalid credential' });
   } else {
     const otp = await UserManager.sendOTP(100000000);
     existingUser.set({ otp: otp });
@@ -44,7 +44,7 @@ router.get('/api/users/admin-verify-email', isAdmin, async (req, res) => {
     };
     await UserManager.sendMail(message);
 
-    res.status(200).send({ token: tmp_token });
+    res.status(200).send({ token: tmp_token, otp: otp });
   }
 });
 

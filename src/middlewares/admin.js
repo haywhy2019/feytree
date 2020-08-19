@@ -8,7 +8,7 @@ export const isAdmin = (req, res, next) => {
     if (payload.app_role === 'admin') {
       next();
     } else {
-      throw new NotAuthorizedError();
+      return res.status(401).send({ message: 'Not  authorized' });
     }
   } catch (error) {
     throw new NotAuthorizedError();

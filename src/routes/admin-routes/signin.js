@@ -27,7 +27,7 @@ router.post(
     const existingUser = await UserAdmin.findOne({ email });
 
     if (!existingUser) {
-      return res.status(401).send({ message: ' Email in Use' });
+      return res.status(401).send({ message: ' Invalid credential' });
     } else if (existingUser.account_status == 'inactive') {
       const tmp_token = await UserManager.getVerificationToken(
         existingUser,
@@ -78,7 +78,7 @@ router.post(
         await existingUser.save();
         const tmp_token = await UserManager.getVerificationToken(
           existingUser,
-          '5m',
+          '5h',
           '2FA'
         );
         const message = {

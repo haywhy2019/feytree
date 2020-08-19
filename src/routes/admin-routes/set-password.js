@@ -25,15 +25,8 @@ router.post(
   validateRequest,
   async (req, res) => {
     const { email, password } = req.body;
-    //const hash_password = await Password.toHash(password);
-    const existingUser = await UserAdmin.findOne(
-      { email: email }
-      // { password: hash_password, account_status: 'active' },
 
-      // {
-      //  new: true,
-      //}
-    );
+    const existingUser = await UserAdmin.findOne({ email: email });
     existingUser.set({ password, account_status: 'active' });
     await existingUser.save();
 
