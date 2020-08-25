@@ -14,21 +14,20 @@ router.get('/api/users/verify-email', currentUser, async (req, res) => {
   try {
     const token = req.headers.authorization.split(' ')[1];
     payload = jwt.verify(token, process.env.JWT_KEY);
-    console.log(payload);
   } catch (error) {
     console.log(error);
   }
 
   const { email, reason } = payload;
-  const existingUser = await User.findOneAndUpdate(
-    { email: email },
-    { account_status: 'pre_active' },
-    {
-      new: true,
-    }
-  );
+  const existingUser = await User.findOne({ email: email });
+  if (existingUser.app_role === 'user') {
+    existingUser.set({ account_status: 'active' });
+  } else {
+    existingUser.set({ account_status: 'pre_active' });
+  }
+  existingUser.save();
 
-  res.status(201).send({ mes: existingUser });
+  res.status(201).send({ message: 'Email has been verified', existingUser });
 });
 
 export { router as emailVerificationRouter };

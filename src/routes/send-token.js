@@ -35,7 +35,7 @@ router.get('/api/users/verify-email', currentUser, async (req, res) => {
     );
     const message = {
       from: 'elonmusk@tesla.com',
-      to: 'to@email.com',
+      to: email,
       subject: 'Feytree 2FA Verification',
       html:
         '<h1>You need to verify your email!</h1><p> 2FA will expire within an hour, your 2FA is ' +

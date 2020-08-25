@@ -35,7 +35,7 @@ router.post(
       );
       const message = {
         from: 'elonmusk@tesla.com',
-        to: 'to@email.com',
+        to: email,
         subject: 'Feytree Verification',
         html:
           '<h1>You need to verify your email!</h1><p> Link will expire within an hour, Click to verify your email <a href="http://127.0.0.1:8000/token=' +
@@ -44,8 +44,10 @@ router.post(
       };
       await UserManager.sendMail(message);
 
-      return res.status(201).send(existingUser);
-    } else if (existingUser.account_status == 'pre_active') {
+      return res
+        .status(301)
+        .send({ message: 'Verification link has been sent to your email' });
+    } else if (existingUser.account_status === 'pre_active') {
       const tmp_token = await UserManager.getVerificationToken(
         existingUser,
         '5h',
@@ -53,7 +55,7 @@ router.post(
       );
       const message = {
         from: 'elonmusk@tesla.com',
-        to: 'to@email.com',
+        to: email,
         subject: 'Feytree Verification',
         html:
           '<h1>You need to verify your email!</h1><p> Link will expire within an hour, Click to verify your email <a href="http://127.0.0.1:8000/token=' +
@@ -62,7 +64,9 @@ router.post(
       };
       await UserManager.sendMail(message);
 
-      return res.status(201).send(existingUser);
+      return res
+        .status(301)
+        .send({ message: 'Password reset link has been sent to your email' });
     } else {
       const passwordsMatch = await Password.compare(
         existingUser.password,
@@ -82,7 +86,7 @@ router.post(
         );
         const message = {
           from: 'elonmusk@tesla.com',
-          to: 'to@email.com',
+          to: email,
           subject: 'Feytree 2FA Verification',
           html:
             '<h1>You need to verify your email!</h1><p> 2FA will expire within an hour, your 2FA is ' +
@@ -91,7 +95,11 @@ router.post(
         };
         await UserManager.sendMail(message);
 
-        return res.status(200).send({ existingUser, token: tmp_token });
+        return res.status(301).send({
+          message: '2FA code has been sent to your email',
+          data: existingUser,
+          token: tmp_token,
+        });
 
         /*
         const userJwt = jwt.sign(

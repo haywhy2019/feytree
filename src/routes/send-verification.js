@@ -32,7 +32,7 @@ router.get('/api/users/send-verification', currentUser, async (req, res) => {
     );
     const message = {
       from: 'elonmusk@tesla.com',
-      to: 'to@email.com',
+      to: email,
       subject: 'Feytree Verification Request',
       html:
         '<h1>Email Verification!</h1><p> Click link to verify your email, Click to change your password <a href="http://127.0.0.1:8000/token=' +

@@ -53,11 +53,11 @@ const userSchema = new mongoose.Schema(
     },
     user_role: {
       type: String,
-      required: true,
+      required: false,
     },
     company_name: {
       type: String,
-      required: true,
+      required: false,
     },
     uses: {
       type: String,

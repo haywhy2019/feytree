@@ -26,7 +26,7 @@ router.get(
       );
       const message = {
         from: 'elonmusk@tesla.com',
-        to: 'to@email.com',
+        to: email,
         subject: 'Feytree Password Request',
         html:
           '<h1>Forget Password Request!</h1><p> Click link to change password, Click to change your password <a href="http://127.0.0.1:8000/token=' +
