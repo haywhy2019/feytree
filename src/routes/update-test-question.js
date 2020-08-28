@@ -1,7 +1,7 @@
 import express from 'express';
 import { body } from 'express-validator';
 import { validateRequest } from '../middlewares/validate-request';
-import { Topics } from '../models/topic';
+import { CreateTest } from '../models/test';
 
 /**
  * @description Converts a string response to an array of objects.
@@ -46,57 +46,36 @@ function stringToJson(input) {
 const router = express.Router();
 
 router.post(
-  '/api/users/create-question',
+  '/api/users/update-test-question',
   [
-    body('question').isString().withMessage('Question must be valid'),
+    body('testoptions').isString().withMessage('Question must be valid'),
 
-    body('topic_id').isString().withMessage('Id String must be valid'),
+    body('test_id').isString().withMessage('Id String must be valid'),
   ],
   validateRequest,
   async (req, res) => {
-    const { topic_id, question } = req.body;
-    console.log(req.body);
+    const { test_id, testoptions } = req.body;
+    console.log(test_id);
 
-    const existingTopic = await Topics.findOne({ _id: topic_id });
-    if (!existingTopic) {
+    const existingTest = await CreateTest.findOne({ _id: test_id });
+    if (!existingTest) {
       res.status(401).send({
         message: ' this group or topic does not exists',
       });
     } else {
-      /// var q = JSON.parse(question);
-      // console.log(q);
-      //var nq = stringToJson(question.slice(0, question.length - 1));
-      //console.log(nq);
-      console.log(JSON.parse(question));
-      const existingTopic = await Topics.updateMany(
-        { _id: topic_id },
+      console.log(JSON.parse(testoptions));
+      const existingTest = await CreateTest.updateMany(
+        { _id: test_id },
         {
-          questions: JSON.parse(question),
+          testoptions: JSON.parse(testoptions),
         }
       );
 
-      // existingTopic.questions.push({
-      //  question: question.question,
-      // });
-      // await existingTopic.save();
-
       res
         .status(201)
-        .send({ message: 'New questions has been created', existingTopic });
+        .send({ message: 'New questions has been created', existingTest });
     }
-
-    /*
-    const existingTopic = await Topics.update(
-      { id: topic_id },
-      { $push: { topics: { $each: question } } }
-    );
-
-    res
-      .status(201)
-      .send({ message: 'New questions has been created', existingTopic });
-
-      */
   }
 );
 
-export { router as createQuestionRouter };
+export { router as updateTestQuestionRouter };

@@ -1,10 +1,10 @@
 import express from 'express';
 import jwt from 'jsonwebtoken';
 
-import { currentUser } from '../middlewares/current-user';
-import { User } from '../models/user';
-import { NotAuthorizedError } from '../errors/not-authorized-error';
-import { BadRequestError } from '../errors/bad-request-error';
+import { currentUser } from '../../middlewares/current-user';
+import { User } from '../../models/user';
+import { NotAuthorizedError } from '../../errors/not-authorized-error';
+import { BadRequestError } from '../../errors/bad-request-error';
 
 const router = express.Router();
 

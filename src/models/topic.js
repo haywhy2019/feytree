@@ -3,21 +3,25 @@ import mongoose from 'mongoose';
 var questionsSchema = new mongoose.Schema({
   question: {
     type: String,
-    required: true,
+    required: false,
   },
-  options: {
-    option: {
-      type: String,
-      required: true,
+  options: [
+    {
+      option: {
+        type: String,
+        required: false,
+      },
+      isCorrect: {
+        type: Boolean,
+        required: true,
+        default: false,
+      },
+      allocated_mark: {
+        type: Number,
+        required: false,
+      },
     },
-  },
-
-  answers: {
-    answer: {
-      type: String,
-      required: true,
-    },
-  },
+  ],
 
   answer_key: {
     type: Array,
@@ -34,6 +38,10 @@ var questionsSchema = new mongoose.Schema({
 const topicSchema = new mongoose.Schema(
   {
     topic: {
+      type: String,
+      required: false,
+    },
+    user_id: {
       type: String,
       required: false,
     },

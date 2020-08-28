@@ -2,6 +2,7 @@ import express from 'express';
 import { body } from 'express-validator';
 import { validateRequest } from '../middlewares/validate-request';
 import { Topics } from '../models/topic';
+import { currentUser } from '../middlewares/current-user';
 
 const router = express.Router();
 
@@ -10,8 +11,9 @@ router.post(
   [
     body('topic').isString().withMessage('Topic must be valid'),
 
-    body('user_id').isNumeric().withMessage('Id Number must be valid'),
+    body('user_id').isString().withMessage('Id Number must be valid'),
   ],
+  currentUser,
   validateRequest,
   async (req, res) => {
     const { user_id, topic } = req.body;
@@ -34,4 +36,4 @@ router.post(
   }
 );
 
-export { router as topicRouter };
+export { router as createTopicRouter };

@@ -1,10 +1,10 @@
 import express from 'express';
 import { body } from 'express-validator';
 import jwt from 'jsonwebtoken';
-import { validateRequest } from '../middlewares/validate-request';
-import { User } from '../models/user';
-import { BadRequestError } from '../errors/bad-request-error';
-import { UserManager } from '../services/user-manager';
+import { validateRequest } from '../../middlewares/validate-request';
+import { User } from '../../models/user';
+import { BadRequestError } from '../../errors/bad-request-error';
+import { UserManager } from '../../services/user-manager';
 
 const router = express.Router();
 
@@ -13,12 +13,12 @@ router.post(
   [
     body('email').isEmail().withMessage('Email must be valid'),
     body('username').isString().withMessage('Username must be valid'),
-
+    body('user_role').isString().withMessage('Choose a user role'),
     body('phone_number')
       .isNumeric()
       .isLength({ min: 11, max: 11 })
       .withMessage('Phone Number must be valid'),
-
+    body('company_name').isString().withMessage('Company name is require'),
     body('password')
       .isString()
       .isLength({ min: 8, max: 16 })
@@ -32,8 +32,10 @@ router.post(
       email,
       username,
       phone_number,
-
+      user_role,
+      company_name,
       password,
+      uses,
     } = req.body;
     console.log(email);
 
@@ -45,8 +47,11 @@ router.post(
         email,
         username,
         phone_number,
+        user_role,
+        company_name,
         password,
-        app_role: 'user',
+        uses,
+        app_role: 'demo',
         account_status: 'inactive',
       });
       await user.save();
@@ -70,9 +75,7 @@ router.post(
       };
       await UserManager.sendMail(message);
 
-      res
-        .status(201)
-        .send({ message: 'Verification link has been sent to your email' });
+      res.status(201).send({ user });
     }
   }
 );
