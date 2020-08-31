@@ -1,106 +1,116 @@
 import mongoose from 'mongoose';
+const Schema = mongoose.Schema;
 import { TestTaker } from './test_taker';
 
-var registrationSchema = new mongoose.Schema({
-  text_field: {
-    type: String,
-    required: false,
-  },
-
-  field_type: {
-    type: String,
-    enum: ['TextBox', 'SelectBox', 'CheckBox', 'Calender', 'Image'],
-    default: 'TextBox',
-  },
-  order: {
-    type: Number,
-    required: false,
-  },
-  mandetory: {
-    type: Boolean,
-    required: false,
-  },
-  verify: {
-    type: Boolean,
-    required: false,
-  },
-});
-
-var questionsSchema = new mongoose.Schema({
-  question_id: {
-    type: String,
-    required: false,
-  },
-  question: {
-    type: String,
-    required: false,
-  },
-  options: [
-    {
-      option: {
-        type: String,
-        required: false,
-      },
-      isCorrect: {
-        type: Boolean,
-        required: true,
-        default: false,
-      },
-      allocated_mark: {
-        type: Number,
-        required: false,
-      },
+var registrationSchema = new mongoose.Schema(
+  {
+    text_field: {
+      type: String,
+      required: false,
     },
-  ],
 
-  answer_key: {
-    type: Array,
-    required: false,
-  },
-
-  tags: {
-    type: String,
-    enum: ['Easy', 'Medium', 'Harder'],
-    default: 'Easy',
-  },
-});
-
-var testOptionsSchema = new mongoose.Schema({
-  section_name: {
-    type: String,
-    required: false,
-  },
-  topics: [
-    {
-      topic_name: {
-        type: String,
-        required: false,
-      },
-      topic_id: {
-        type: String,
-        required: false,
-      },
-      questions: [questionsSchema],
-
-      correct_grade: {
-        type: String,
-        required: false,
-      },
-      incorrect_grade: {
-        type: String,
-        required: false,
-      },
-      level: {
-        type: String,
-        required: false,
-      },
-      question_type: {
-        type: String,
-        required: false,
-      },
+    field_type: {
+      type: String,
+      enum: ['TextBox', 'SelectBox', 'CheckBox', 'Calender', 'Image'],
+      default: 'TextBox',
     },
-  ],
-});
+    order: {
+      type: Number,
+      required: false,
+    },
+    mandetory: {
+      type: Boolean,
+      required: false,
+    },
+    verify: {
+      type: Boolean,
+      required: false,
+    },
+  },
+  { timestamps: true }
+);
+
+var questionsSchema = new mongoose.Schema(
+  {
+    question_id: {
+      type: String,
+      required: false,
+    },
+    question: {
+      type: String,
+      required: false,
+    },
+    options: [
+      {
+        option: {
+          type: String,
+          required: false,
+        },
+        isCorrect: {
+          type: Boolean,
+          required: true,
+          default: false,
+        },
+        allocated_mark: {
+          type: Number,
+          required: false,
+        },
+      },
+    ],
+
+    answer_key: {
+      type: Array,
+      required: false,
+    },
+
+    tags: {
+      type: String,
+      enum: ['Easy', 'Medium', 'Harder'],
+      default: 'Easy',
+    },
+  },
+  { timestamps: true }
+);
+
+var testOptionsSchema = new mongoose.Schema(
+  {
+    section_name: {
+      type: String,
+      required: false,
+    },
+    topics: [
+      {
+        topic_name: {
+          type: String,
+          required: false,
+        },
+        topic_id: {
+          type: String,
+          required: false,
+        },
+        questions: [questionsSchema],
+
+        correct_grade: {
+          type: String,
+          required: false,
+        },
+        incorrect_grade: {
+          type: String,
+          required: false,
+        },
+        level: {
+          type: String,
+          required: false,
+        },
+        question_type: {
+          type: String,
+          required: false,
+        },
+      },
+    ],
+  },
+  { timestamps: true }
+);
 
 const testSchema = new mongoose.Schema(
   {
@@ -164,7 +174,7 @@ const testSchema = new mongoose.Schema(
 
     testoptions: [testOptionsSchema],
     testregistration: [registrationSchema],
-    // test_takers: [{ type: Schema.Types.ObjectId, ref: 'TestTaker' }],
+    test_takers: [{ type: Schema.Types.ObjectId, ref: 'TestTaker' }],
     test_link: {
       access_time: {
         anytime: {
@@ -196,6 +206,7 @@ const testSchema = new mongoose.Schema(
         delete ret.__v;
       },
     },
+    timestamps: true,
   }
 );
 

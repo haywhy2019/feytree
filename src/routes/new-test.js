@@ -9,10 +9,10 @@ const router = express.Router();
 router.post(
   '/api/users/new-test/:test_id',
   [body('test_id').isString().withMessage('Id Number must be valid')],
-  currentUser,
+
   validateRequest,
   async (req, res) => {
-    const { test_id } = req.param.test_id;
+    const { test_id } = req.params.test_id;
 
     const existingTest = await CreateTest.findOne(
       { _id: test_id },
@@ -31,4 +31,4 @@ router.post(
   }
 );
 
-export { router as TopicQuestionsRouter };
+export { router as takeNewTestsRouter };

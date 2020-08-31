@@ -1,72 +1,161 @@
 import mongoose from 'mongoose';
 
-var registrationSchema = new mongoose.Schema({
-  text_field: {
-    type: String,
-    required: true,
-  },
+var registrationSchema = new mongoose.Schema(
+  {
+    text_field: {
+      type: String,
+      required: true,
+    },
 
-  field_value: {
-    type: String,
-    required: true,
+    field_value: {
+      type: String,
+      required: true,
+    },
+    order: {
+      type: Number,
+      required: false,
+    },
+    mandetory: {
+      type: Boolean,
+      required: false,
+    },
+    verify: {
+      type: Boolean,
+      required: false,
+    },
   },
-  order: {
-    type: Number,
-    required: false,
-  },
-  mandetory: {
-    type: Boolean,
-    required: false,
-  },
-  verify: {
-    type: Boolean,
-    required: false,
-  },
-});
+  { timestamps: true }
+);
 
-var questionsSchema = new mongoose.Schema({
-  question_id: {
-    type: String,
-    required: false,
-  },
-  question: {
-    type: String,
-    required: false,
-  },
-  options: [
-    {
-      option: {
-        type: String,
+var questionsSchema = new mongoose.Schema(
+  {
+    question_id: {
+      type: String,
+      required: false,
+    },
+    question: {
+      type: String,
+      required: false,
+    },
+    total_score: {
+      type: Number,
+      required: true,
+    },
+    pass_score: {
+      type: Number,
+      required: true,
+    },
+
+    correct_answer: {
+      type: Number,
+      required: true,
+    },
+    incorrect_answer: {
+      type: Number,
+      required: true,
+    },
+    access_time: {
+      from: {
+        type: Date,
         required: false,
       },
-      isCorrect: {
-        type: Boolean,
-        required: true,
-        default: false,
-      },
-      allocated_mark: {
-        type: Number,
+      to: {
+        type: Date,
         required: false,
       },
     },
-  ],
-});
+  },
+  { timestamps: true }
+);
 
-var testResultsSchema = new mongoose.Schema({
-  section_name: {
-    type: String,
-    required: false,
+var topicsSchema = new mongoose.Schema(
+  {
+    topic_name: {
+      type: String,
+      required: false,
+    },
+    topic_total_score: {
+      type: Number,
+      required: true,
+    },
+    topic_pass_score: {
+      type: Number,
+      required: true,
+    },
+
+    topic_total_question: {
+      type: Number,
+      required: true,
+    },
+    topic_correct_answer: {
+      type: Number,
+      required: true,
+    },
+    topic_incorrect_answer: {
+      type: Number,
+      required: true,
+    },
+
+    questions: [questionsSchema],
+    access_time: {
+      from: {
+        type: Date,
+        required: false,
+      },
+      to: {
+        type: Date,
+        required: false,
+      },
+    },
   },
-  topic_name: {
-    type: String,
-    required: false,
+  { timestamps: true }
+);
+
+var testResultsSchema = new mongoose.Schema(
+  {
+    section_name: {
+      type: String,
+      required: false,
+    },
+    section_total_score: {
+      type: Number,
+      required: true,
+    },
+    section_pass_score: {
+      type: Number,
+      required: true,
+    },
+    section_total_topic: {
+      type: Number,
+      required: true,
+    },
+    section_total_question: {
+      type: Number,
+      required: true,
+    },
+    section_correct_answer: {
+      type: Number,
+      required: true,
+    },
+    section_incorrect_answer: {
+      type: Number,
+      required: true,
+    },
+
+    topics: [topicsSchema],
+    access_time: {
+      from: {
+        type: Date,
+        required: false,
+      },
+      to: {
+        type: Date,
+        required: false,
+      },
+    },
   },
-  topic_id: {
-    type: String,
-    required: false,
-  },
-  questions: [questionsSchema],
-});
+  { timestamps: true }
+);
 
 const testTakerSchema = new mongoose.Schema(
   {
@@ -74,12 +163,40 @@ const testTakerSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    total_score: {
+    email: {
       type: String,
       required: true,
     },
+    first_name: {
+      type: String,
+      required: true,
+    },
+    overall_total_score: {
+      type: Number,
+      required: true,
+    },
+    overall_pass_score: {
+      type: Number,
+      required: true,
+    },
+    overall_total_topic: {
+      type: Number,
+      required: true,
+    },
+    total_question: {
+      type: Number,
+      required: true,
+    },
+    overall_correct_answer: {
+      type: Number,
+      required: true,
+    },
+    overall_incorrect_answer: {
+      type: Number,
+      required: true,
+    },
 
-    testResult: [testResultsSchema],
+    testresult: [testResultsSchema],
     testregistration: [registrationSchema],
 
     test_link: {
@@ -99,11 +216,6 @@ const testTakerSchema = new mongoose.Schema(
         enum: ['Normal', 'TimeUP'],
         default: 'Normal',
       },
-
-      link: {
-        type: String,
-        required: false,
-      },
     },
   },
   {
@@ -115,6 +227,7 @@ const testTakerSchema = new mongoose.Schema(
         delete ret.__v;
       },
     },
+    timestamps: true,
   }
 );
 

@@ -1,41 +1,47 @@
 import mongoose from 'mongoose';
 import { Password } from '../services/password';
 
-var registrationSchema = new mongoose.Schema({
-  text_field: {
-    type: String,
-    required: true,
-  },
+var registrationSchema = new mongoose.Schema(
+  {
+    text_field: {
+      type: String,
+      required: true,
+    },
 
-  field_type: {
-    type: String,
-    enum: ['TextBox', 'SelectBox', 'CheckBox', 'Calender', 'Image'],
-    default: 'TextBox',
+    field_type: {
+      type: String,
+      enum: ['TextBox', 'SelectBox', 'CheckBox', 'Calender', 'Image'],
+      default: 'TextBox',
+    },
+    order: {
+      type: Number,
+      required: false,
+    },
+    mandetory: {
+      type: Boolean,
+      required: false,
+    },
+    verify: {
+      type: Boolean,
+      required: false,
+    },
   },
-  order: {
-    type: Number,
-    required: false,
-  },
-  mandetory: {
-    type: Boolean,
-    required: false,
-  },
-  verify: {
-    type: Boolean,
-    required: false,
-  },
-});
+  { timestamps: true }
+);
 
-var tagSchema = new mongoose.Schema({
-  tag_field: {
-    type: String,
-    required: true,
+var tagSchema = new mongoose.Schema(
+  {
+    tag_field: {
+      type: String,
+      required: true,
+    },
+    question_field: {
+      type: Number,
+      required: false,
+    },
   },
-  question_field: {
-    type: Number,
-    required: false,
-  },
-});
+  { timestamps: true }
+);
 
 const userSchema = new mongoose.Schema(
   {
@@ -141,6 +147,7 @@ const userSchema = new mongoose.Schema(
         delete ret.__v;
       },
     },
+    timestamps: true,
   }
 );
 

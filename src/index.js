@@ -37,6 +37,10 @@ import { testLinkRouter } from './routes/test-link';
 import { createTestRouter } from './routes/create-test';
 import { updateRegRouter } from './routes/update-registration-field';
 import { updateTestQuestionRouter } from './routes/update-test-question';
+import { takeNewTestsRouter } from './routes/new-test';
+import { testRegistrationRouter } from './routes/register-test';
+import { takeTestRouter } from './routes/take-test';
+import { submitTestRouter } from './routes/submit-test';
 
 import { errorHandler } from './middlewares/error-handler';
 
@@ -67,6 +71,10 @@ app.use(testLinkRouter);
 app.use(createTestRouter);
 app.use(updateRegRouter);
 app.use(updateTestQuestionRouter);
+app.use(takeTestRouter);
+app.use(takeNewTestsRouter);
+app.use(testRegistrationRouter);
+app.use(submitTestRouter);
 
 ////////////////////////////
 

@@ -1,39 +1,42 @@
 import mongoose from 'mongoose';
 
-var questionsSchema = new mongoose.Schema({
-  question: {
-    type: String,
-    required: false,
-  },
-  options: [
-    {
-      option: {
-        type: String,
-        required: false,
-      },
-      isCorrect: {
-        type: Boolean,
-        required: true,
-        default: false,
-      },
-      allocated_mark: {
-        type: Number,
-        required: false,
-      },
+var questionsSchema = new mongoose.Schema(
+  {
+    question: {
+      type: String,
+      required: false,
     },
-  ],
+    options: [
+      {
+        option: {
+          type: String,
+          required: false,
+        },
+        isCorrect: {
+          type: Boolean,
+          required: true,
+          default: false,
+        },
+        allocated_mark: {
+          type: Number,
+          required: false,
+        },
+      },
+    ],
 
-  answer_key: {
-    type: Array,
-    required: false,
-  },
+    answer_key: {
+      type: Array,
+      required: false,
+    },
 
-  tags: {
-    type: String,
-    enum: ['Easy', 'Medium', 'Harder'],
-    default: 'Easy',
+    tags: {
+      type: String,
+      enum: ['Easy', 'Medium', 'Harder'],
+      default: 'Easy',
+    },
   },
-});
+  { timestamps: true }
+);
 
 const topicSchema = new mongoose.Schema(
   {
@@ -61,6 +64,7 @@ const topicSchema = new mongoose.Schema(
         delete ret.__v;
       },
     },
+    timestamps: true,
   }
 );
 
