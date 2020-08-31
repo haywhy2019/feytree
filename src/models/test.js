@@ -70,32 +70,36 @@ var testOptionsSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
-  topic_name: {
-    type: String,
-    required: false,
-  },
-  topic_id: {
-    type: String,
-    required: false,
-  },
-  questions: [questionsSchema],
+  topics: [
+    {
+      topic_name: {
+        type: String,
+        required: false,
+      },
+      topic_id: {
+        type: String,
+        required: false,
+      },
+      questions: [questionsSchema],
 
-  correct_grade: {
-    type: String,
-    required: false,
-  },
-  incorrect_grade: {
-    type: String,
-    required: false,
-  },
-  level: {
-    type: String,
-    required: false,
-  },
-  question_type: {
-    type: String,
-    required: false,
-  },
+      correct_grade: {
+        type: String,
+        required: false,
+      },
+      incorrect_grade: {
+        type: String,
+        required: false,
+      },
+      level: {
+        type: String,
+        required: false,
+      },
+      question_type: {
+        type: String,
+        required: false,
+      },
+    },
+  ],
 });
 
 const testSchema = new mongoose.Schema(

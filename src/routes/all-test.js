@@ -1,30 +1,30 @@
 import express from 'express';
 import { body } from 'express-validator';
 import { validateRequest } from '../middlewares/validate-request';
-import { Topics } from '../models/topic';
+import { CreateTest } from '../models/test';
 import { currentUser } from '../middlewares/current-user';
 
 const router = express.Router();
 
 router.post(
-  '/api/users/all-topics',
+  '/api/users/all-test',
   [body('user_id').isString().withMessage('Id Number must be valid')],
   currentUser,
   validateRequest,
   async (req, res) => {
     const { user_id } = req.body;
 
-    Topics.find({ user_id }, 'topic id', function (err, topic) {
-      if (err)
-        return res.status(204).send({
-          message: err,
-        });
-      res.status(200).send({
-        message: 'All topic has been fetched',
-        data: topic,
+    const existingTest = await CreateTest.find({ user_id });
+    if (!existingTest) {
+      res.status(204).send({
+        message: 'You do not have any question yet!',
       });
-    });
+    } else {
+      res
+        .status(200)
+        .send({ message: 'All topic has been fetched', data: existingTest });
+    }
   }
 );
 
-export { router as allTopicsRouter };
+export { router as allQuestionsRouter };

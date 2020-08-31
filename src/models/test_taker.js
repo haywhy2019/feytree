@@ -6,10 +6,9 @@ var registrationSchema = new mongoose.Schema({
     required: true,
   },
 
-  field_type: {
+  field_value: {
     type: String,
-    enum: ['TextBox', 'SelectBox', 'CheckBox', 'Calender', 'Image'],
-    default: 'TextBox',
+    required: true,
   },
   order: {
     type: Number,
@@ -25,7 +24,7 @@ var registrationSchema = new mongoose.Schema({
   },
 });
 
-var testResultsSchema = new mongoose.Schema({
+var questionsSchema = new mongoose.Schema({
   question_id: {
     type: String,
     required: false,
@@ -51,22 +50,31 @@ var testResultsSchema = new mongoose.Schema({
       },
     },
   ],
+});
 
-  answer_key: {
-    type: Array,
+var testResultsSchema = new mongoose.Schema({
+  section_name: {
+    type: String,
     required: false,
   },
-
-  tags: {
+  topic_name: {
     type: String,
-    enum: ['Easy', 'Medium', 'Harder'],
-    default: 'Easy',
+    required: false,
   },
+  topic_id: {
+    type: String,
+    required: false,
+  },
+  questions: [questionsSchema],
 });
 
 const testTakerSchema = new mongoose.Schema(
   {
     test_id: {
+      type: String,
+      required: true,
+    },
+    total_score: {
       type: String,
       required: true,
     },
@@ -84,6 +92,12 @@ const testTakerSchema = new mongoose.Schema(
           type: Date,
           required: false,
         },
+      },
+
+      finish_state: {
+        type: String,
+        enum: ['Normal', 'TimeUP'],
+        default: 'Normal',
       },
 
       link: {
