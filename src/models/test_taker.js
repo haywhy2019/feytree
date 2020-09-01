@@ -39,20 +39,20 @@ var questionsSchema = new mongoose.Schema(
     },
     total_score: {
       type: Number,
-      required: true,
+      required: false,
     },
     pass_score: {
       type: Number,
-      required: true,
+      required: false,
     },
 
     correct_answer: {
       type: Number,
-      required: true,
+      required: false,
     },
     incorrect_answer: {
       type: Number,
-      required: true,
+      required: false,
     },
     access_time: {
       from: {
@@ -76,24 +76,24 @@ var topicsSchema = new mongoose.Schema(
     },
     topic_total_score: {
       type: Number,
-      required: true,
+      required: false,
     },
     topic_pass_score: {
       type: Number,
-      required: true,
+      required: false,
     },
 
     topic_total_question: {
       type: Number,
-      required: true,
+      required: false,
     },
     topic_correct_answer: {
       type: Number,
-      required: true,
+      required: false,
     },
     topic_incorrect_answer: {
       type: Number,
-      required: true,
+      required: false,
     },
 
     questions: [questionsSchema],
@@ -119,27 +119,27 @@ var testResultsSchema = new mongoose.Schema(
     },
     section_total_score: {
       type: Number,
-      required: true,
+      required: false,
     },
     section_pass_score: {
       type: Number,
-      required: true,
+      required: false,
     },
     section_total_topic: {
       type: Number,
-      required: true,
+      required: false,
     },
     section_total_question: {
       type: Number,
-      required: true,
+      required: false,
     },
     section_correct_answer: {
       type: Number,
-      required: true,
+      required: false,
     },
     section_incorrect_answer: {
       type: Number,
-      required: true,
+      required: false,
     },
 
     topics: [topicsSchema],
@@ -173,27 +173,27 @@ const testTakerSchema = new mongoose.Schema(
     },
     overall_total_score: {
       type: Number,
-      required: true,
+      required: false,
     },
     overall_pass_score: {
       type: Number,
-      required: true,
+      required: false,
     },
     overall_total_topic: {
       type: Number,
-      required: true,
+      required: false,
     },
     total_question: {
       type: Number,
-      required: true,
+      required: false,
     },
     overall_correct_answer: {
       type: Number,
-      required: true,
+      required: false,
     },
     overall_incorrect_answer: {
       type: Number,
-      required: true,
+      required: false,
     },
 
     testresult: [testResultsSchema],

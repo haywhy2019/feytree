@@ -14,12 +14,11 @@ router.post(
     body('test_id').isString().withMessage('Id Number must be valid'),
     body('email').isString().withMessage('Id Number must be valid'),
     body('first_name').isString().withMessage('Id Number must be valid'),
-    body('testregistration').isString().withMessage(' must be valid'),
   ],
 
   validateRequest,
   async (req, res) => {
-    const { test_id, testregistration } = req.body;
+    const { test_id, email, first_name, testregistration } = req.body;
 
     const existingEmail = await TestTaker.findOne({ email, test_id });
     const existingTest = await CreateTest.findOne({ _id: test_id });

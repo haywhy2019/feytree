@@ -54,6 +54,7 @@ var questionsSchema = new mongoose.Schema(
         allocated_mark: {
           type: Number,
           required: false,
+          default: 0,
         },
       },
     ],
@@ -71,43 +72,44 @@ var questionsSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+var topicsSchema = new mongoose.Schema(
+  {
+    topic_name: {
+      type: String,
+      required: false,
+    },
+    topic_id: {
+      type: String,
+      required: false,
+    },
+    questions: [questionsSchema],
 
+    correct_grade: {
+      type: String,
+      required: false,
+    },
+    incorrect_grade: {
+      type: String,
+      required: false,
+    },
+    level: {
+      type: String,
+      required: false,
+    },
+    question_type: {
+      type: String,
+      required: false,
+    },
+  },
+  { timestamps: true }
+);
 var testOptionsSchema = new mongoose.Schema(
   {
     section_name: {
       type: String,
       required: false,
     },
-    topics: [
-      {
-        topic_name: {
-          type: String,
-          required: false,
-        },
-        topic_id: {
-          type: String,
-          required: false,
-        },
-        questions: [questionsSchema],
-
-        correct_grade: {
-          type: String,
-          required: false,
-        },
-        incorrect_grade: {
-          type: String,
-          required: false,
-        },
-        level: {
-          type: String,
-          required: false,
-        },
-        question_type: {
-          type: String,
-          required: false,
-        },
-      },
-    ],
+    topics: [topicsSchema],
   },
   { timestamps: true }
 );

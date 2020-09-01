@@ -20,6 +20,7 @@ var questionsSchema = new mongoose.Schema(
         allocated_mark: {
           type: Number,
           required: false,
+          default: 0,
         },
       },
     ],

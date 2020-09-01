@@ -75,7 +75,7 @@ router.post(
     });
     if (existingTest) {
       res.status(401).send({
-        message: ' this group or topic does not exists',
+        message: ' this group or topic already exists',
       });
     } else {
       const test = await CreateTest({
@@ -94,6 +94,7 @@ router.post(
         { _id: test.id },
         {
           testoptions: JSON.parse(testoptions),
+          testregistration: JSON.parse(testregistration),
         }
       );
 
